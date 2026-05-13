@@ -79,7 +79,7 @@ function DemandForecast() {
               { l: 'Medicine', v: result.medicine, c: 'var(--text-primary)' },
               { l: 'Region', v: result.region, c: 'var(--cyan)' },
               { l: '6M Total Demand', v: `${fmt.k(result.predictions?.reduce((s, p) => s + p.pred_qty, 0))} units`, c: 'var(--violet-hi)' },
-              { l: '6M Est. Revenue', v: fmt.cr(result.predictions?.reduce((s, p) => s + p.pred_rev, 0)), c: 'var(--amber-hi)' },
+              { l: '6M Est. Revenue', v: fmt.inrAuto(result.predictions?.reduce((s, p) => s + Number(p?.pred_rev || 0), 0)), c: 'var(--amber-hi)' },
             ].map((s, i) => (
               <div key={i}>
                 <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 3 }}>{s.l}</p>

@@ -102,10 +102,6 @@ function Topbar({ onMenu }) {
         <button onClick={onMenu} className="btn btn-ghost btn-sm" style={{ display: 'none' }} id="menu-btn">
           <Menu size={16} />
         </button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 12px', background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)', borderRadius: 8 }}>
-          <AlertTriangle size={13} color="var(--amber-hi)" />
-          <span style={{ fontSize: 12, color: 'var(--amber-hi)' }}>Real dataset: 200K records · ₹5,053Cr revenue · 30 medicines · 49 diseases</span>
-        </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <button className="btn btn-ghost btn-sm" style={{ position: 'relative' }}>
