@@ -1,6 +1,6 @@
-# 💊 PharmaBI v2.0 — AI-Driven Pharmaceutical Intelligence Platform
+# 💊 Pharmaceutical Analytics v2.0 — AI-Driven Pharmaceutical Intelligence Platform
 
-> **Hackathon-Grade Full-Stack System** — Real 200,000-record dataset · ₹5,053Cr revenue · 30 medicines · 49 diseases · 10 Indian cities
+> **Full-Stack System** — Real 200,000-record dataset · ₹5,053Cr revenue · 30 medicines · 49 diseases · 10 Indian cities
 
 ---
 
@@ -63,7 +63,6 @@
 - All 3 ML model metrics displayed
 - Hyperparameter tuning UI
 - Role-based access control (Admin/Analyst/Pharmacist/Customer)
-- Full API endpoint explorer (22 routes)
 
 ---
 
@@ -88,7 +87,7 @@ pharma-enhanced/
 │           ├── SearchPage.js       # Medicine search + AI recs + prescription
 │           ├── Pharmacies.js       # Nearby + price compare
 │           ├── CartOrder.js        # Cart + checkout + order timeline
-│           └── Admin.js            # Health + ML config + roles + API explorer
+│           └── Admin.js            # Health + ML config + roles
 │
 ├── backend/
 │   ├── app.py                      # Flask API — 22 endpoints
@@ -98,7 +97,7 @@ pharma-enhanced/
 │   ├── train.py                    # Full ML training script
 │   ├── data/
 │   │   ├── pharma_data.csv         # 200K records (from Excel)
-│   │   └── analytics.json          # Pre-computed analytics cache + dashboard range snapshots
+│   │   └── analytics.json          # Pre-computed analytics cache
 │   └── models/
 │       ├── demand_model.pkl        # GBM demand predictor
 │       ├── revenue_model.pkl       # GBM revenue predictor
@@ -148,8 +147,6 @@ pip install scikit-learn pandas openpyxl numpy
 python train.py
 ```
 
-`train.py` now also updates `ml_model/data/analytics.json` with `dashboard_ranges` (`6`, `12`, `24`) used by the range-aware dashboard.
-
 ### 4. Frontend Setup
 
 ```bash
@@ -168,50 +165,17 @@ npm start
 | Route | Description |
 |-------|-------------|
 | `GET /api/analytics/kpi` | KPI cards (supports `?range=6|12|24`) |
-| `GET /api/analytics/monthly-sales` | Revenue/profit/units by month (supports `?range=6|12|24`) |
-| `GET /api/analytics/top-diseases` | Top 10 diseases by cases (supports `?range=6|12|24`) |
-| `GET /api/analytics/region-stats` | Revenue by region (supports `?range=6|12|24`) |
+| `GET /api/analytics/monthly-sales` | Revenue/profit/units by month |
+| `GET /api/analytics/top-diseases` | Top 10 diseases by cases |
+| `GET /api/analytics/region-stats` | Revenue by region |
 | `GET /api/analytics/medicine-stats` | Medicine performance |
 | `GET /api/analytics/heatmap` | Disease × Region matrix |
 | `GET /api/analytics/disease-trend` | Monthly case trends |
-| `GET /api/analytics/stock-summary` | Stock status summary (supports `?range=6|12|24`) |
-| `GET /api/analytics/season-stats` | Seasonal demand breakdown (supports `?range=6|12|24`) |
+| `GET /api/analytics/stock-summary` | Stock status summary |
+| `GET /api/analytics/season-stats` | Seasonal demand breakdown |
 | `GET /api/analytics/stock-risk` | Risk scores per medicine |
 | `GET /api/analytics/anomalies` | ML-detected anomalies |
 | `GET /api/analytics/forecasts` | 6-month ML forecasts |
-
-### Dashboard Range Query
-
-Dashboard analytics endpoints accept an optional `range` query parameter:
-
-- `range=6`  → last 6 months
-- `range=12` → last 12 months
-- `range=24` → last 24 months
-
-If `range` is omitted, backend returns legacy all-time payloads for backward compatibility.
-
-### `analytics.json` Range Snapshot Schema
-
-`ml_model/data/analytics.json` includes precomputed snapshots for fast dashboard switching:
-
-```json
-{
-	"dashboard_ranges": {
-		"6": {
-			"kpi": {},
-			"monthly_sales": [],
-			"top_diseases": [],
-			"region_stats": [],
-			"stock_summary": [],
-			"season_stats": []
-		},
-		"12": { "...": "same keys" },
-		"24": { "...": "same keys" }
-	}
-}
-```
-
-These snapshots are generated/updated by running `ml_model/train.py`.
 
 ### ML
 | Route | Description |
@@ -247,23 +211,3 @@ These snapshots are generated/updated by running `ml_model/train.py`.
 | **State** | React Context (Cart) |
 
 ---
-
-## 💡 Demo Mode
-
-The frontend **works fully offline** using built-in rich mock data derived from the real dataset. When the Flask backend is running, it automatically fetches live data and ML predictions.
-
----
-
-## 🏆 Hackathon Highlights
-
-- **Real Data**: 200,000 records · ₹5,053Cr revenue · 10 Indian cities
-- **3 ML Models**: Demand forecasting, revenue prediction, anomaly detection
-- **22 API Endpoints**: Complete RESTful backend
-- **8 Pages**: Dashboard → Analytics → AI Insights → Inventory → Search → Pharmacies → Cart → Admin
-- **Interactive**: What-if sliders, disease heatmap, animated order timeline
-- **Production-Quality UI**: Dark theme, glassmorphism, micro-animations
-
----
-
-## 📄 License
-MIT — Free for educational and hackathon use.
